@@ -1,7 +1,26 @@
 doctype html
-html
+html(lang='en')
   head
     title= title
-    link(rel='stylesheet', href='/stylesheets/style.css')
+    meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
   body
-    block content
+    div 
+      div
+        div
+          block sidebar
+            ul
+              li 
+                a(href='/') Home
+              li 
+                a(href='/sandwiches/') All Sandwiches
+              li 
+                a(href='/categories/') All Categories
+                hr
+              li 
+                a(href='/sandwich/create') Create new sandwich
+              li 
+                a(href='/categories/create') Create new category
+                
+        div
+          block content
