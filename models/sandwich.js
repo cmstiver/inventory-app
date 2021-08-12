@@ -9,6 +9,6 @@ const SandwichSchema = new Schema({
   category: [{ type: Schema.ObjectId, ref: 'Category' }],
 });
 
-SandwichSchema.virtual('url').get(() => `/sandwichs/${this._id}`);
+SandwichSchema.virtual('url').get(() => `/sandwiches/${this._id}`);
 
 module.exports = mongoose.model('Sandwich', SandwichSchema);
