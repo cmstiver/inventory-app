@@ -32,6 +32,7 @@ exports.sandwich_detail = (req, res, next) => {
         return next(error);
       }
       return res.render('sandwich_detail', {
+        title: results.sandwich.name,
         sandwich: results.sandwich,
       });
     },
