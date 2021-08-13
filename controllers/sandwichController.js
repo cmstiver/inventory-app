@@ -181,3 +181,46 @@ exports.sandwich_update_post = [
     }
   },
 ];
+
+exports.sandwich_delete_get = (req, res, next) => {
+  async.parallel(
+    {
+      sandwich(callback) {
+        Sandwich.findById(req.params.id).exec(callback);
+      },
+    },
+    (err, results) => {
+      if (err) {
+        return next(err);
+      }
+      if (results.sandwich == null) {
+        res.redirect('/sandwiches/');
+      }
+      res.render('sandwich_delete', {
+        title: 'Delete sandwich',
+        sandwich: results.sandwich,
+      });
+    },
+  );
+};
+
+exports.sandwich_delete_post = (req, res, next) => {
+  async.parallel(
+    {
+      sandwich(callback) {
+        Sandwich.findById(req.body.sandwichid).exec(callback);
+      },
+    },
+    (err, results) => {
+      if (err) {
+        return next(err);
+      }
+      Sandwich.findByIdAndRemove(req.body.sandwichid, (err) => {
+        if (err) {
+          return next(err);
+        }
+        res.redirect('/sandwiches/');
+      });
+    },
+  );
+};

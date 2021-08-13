@@ -14,7 +14,7 @@ block content
       dl
       each sandwich in country_sandwiches
         dt
-          a(href=sandwich.url) #{sandwich.name}
+          a(href='/sandwiches/' + sandwich.url) #{sandwich.name}
         dd #{sandwich.description}
 
   else

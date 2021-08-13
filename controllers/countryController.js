@@ -82,6 +82,55 @@ exports.country_create_post = [
   },
 ];
 
+exports.country_update_get = (req, res, next) => {
+  async.parallel(
+    {
+      country(callback) {
+        Country.findById(req.params.id).populate('country').exec(callback);
+      },
+    },
+    (err, results) => {
+      if (err) {
+        return next(err);
+      }
+      if (results.country == null) {
+        const err = new Error('Country not found');
+        err.status = 404;
+        return next(err);
+      }
+      res.render('country_form', {
+        title: 'Update Country',
+        countries: results.country,
+      });
+    },
+  );
+};
+
+exports.country_update_post = [
+  body('name', 'Country name required').trim().isLength({ min: 1 }).escape(),
+
+  (req, res, next) => {
+    const errors = validationResult(req);
+
+    const country = new Country({ name: req.body.name, _id: req.params.id });
+
+    if (!errors.isEmpty()) {
+      res.render('country_form', {
+        title: 'Update Country',
+        country,
+        errors: errors.array(),
+      });
+    } else {
+      Country.findByIdAndUpdate(req.params.id, country, {}, (err, thecountry) => {
+        if (err) {
+          return next(err);
+        }
+        res.redirect(`/countries/${thecountry.url}`);
+      });
+    }
+  },
+];
+
 exports.country_delete_get = (req, res, next) => {
   async.parallel(
     {
@@ -97,7 +146,7 @@ exports.country_delete_get = (req, res, next) => {
         return next(err);
       }
       if (results.country == null) {
-        res.redirect('/countries');
+        res.redirect('/countries/');
       }
       res.render('country_delete', {
         title: 'Delete country',
@@ -133,7 +182,7 @@ exports.country_delete_post = (req, res, next) => {
           if (err) {
             return next(err);
           }
-          res.redirect('/countries');
+          res.redirect('/countries/');
         });
       }
     },

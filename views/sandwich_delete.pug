@@ -1,0 +1,12 @@
+extends layout
+
+block content
+  h1 #{title}: #{sandwich.name}
+
+  p Do you really want to delete this sandwich?
+
+  form(method='POST' action='')
+    div.form-group
+      input#sandwichid.form-control(type='hidden',name='sandwichid', required='true', value=sandwich._id )
+
+    button.btn.btn-primary(type='submit') Delete
