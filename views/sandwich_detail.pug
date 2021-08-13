@@ -9,7 +9,7 @@ block content
       div.card-body
         h5.card-title #{sandwich.name}
         p.card-text #{sandwich.country.name}
-        p.card-text #{sandwich.price}
+        p.card-text $#{sandwich.price}
         p.card-text #{sandwich.description}
         div.d-flex.justify-content-around
           a.btn.btn-info(href=sandwich.url+'/update') Update Sandwich

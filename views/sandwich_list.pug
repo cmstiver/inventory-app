@@ -9,7 +9,7 @@ block content
             img.rounded(src=`${sandwich.image}`, alt="A lot of flags.")
             div.card-body
               h5.card-title #{sandwich.name}
-              p.card-text #{sandwich.price}
+              p.card-text $#{sandwich.price}
               a.btn.btn-primary(href=sandwich.url) More Info
     else
       li There are no sandwiches.
