@@ -1,13 +1,12 @@
 const express = require('express');
 const async = require('async');
+const { body, validationResult } = require('express-validator');
 
-const Countries = require('../models/country');
-const Sandwiches = require('../models/sandwich');
-
-const router = express.Router();
+const Country = require('../models/country');
+const Sandwich = require('../models/sandwich');
 
 exports.country_list = (req, res, next) => {
-  Countries.find({}, 'name')
+  Country.find({}, 'name')
     .sort([['name', 'ascending']])
     .exec((err, listCountries) => {
       if (err) {
@@ -21,11 +20,11 @@ exports.country_detail = (req, res, next) => {
   async.parallel(
     {
       country(callback) {
-        Countries.findById(req.params.id).exec(callback);
+        Country.findById(req.params.id).exec(callback);
       },
 
       country_sandwiches(callback) {
-        Sandwiches.find({ country: req.params.id }).exec(callback);
+        Sandwich.find({ country: req.params.id }).exec(callback);
       },
     },
     (err, results) => {
@@ -44,6 +43,99 @@ exports.country_detail = (req, res, next) => {
         country: results.country,
         country_sandwiches: results.country_sandwiches,
       });
+    },
+  );
+};
+
+exports.country_create_get = (req, res) => {
+  res.render('country_form', { title: 'Create Country' });
+};
+
+exports.country_create_post = [
+  body('name', 'Country name required').trim().isLength({ min: 1 }).escape(),
+
+  (req, res, next) => {
+    const errors = validationResult(req);
+
+    const country = new Country({ name: req.body.name });
+
+    if (!errors.isEmpty()) {
+      res.render('country_form', { title: 'Create Country', country, errors: errors.array() });
+    } else {
+      Country.findOne({ name: req.body.name }).exec((err, foundCountry) => {
+        if (err) {
+          return next(err);
+        }
+
+        if (foundCountry) {
+          res.redirect(foundCountry.url);
+        } else {
+          country.save((err) => {
+            if (err) {
+              return next(err);
+            }
+            res.redirect(country.url);
+          });
+        }
+      });
+    }
+  },
+];
+
+exports.country_delete_get = (req, res, next) => {
+  async.parallel(
+    {
+      country(callback) {
+        Country.findById(req.params.id).exec(callback);
+      },
+      countries_sandwiches(callback) {
+        Sandwich.find({ country: req.params.id }).exec(callback);
+      },
+    },
+    (err, results) => {
+      if (err) {
+        return next(err);
+      }
+      if (results.country == null) {
+        res.redirect('/countries');
+      }
+      res.render('country_delete', {
+        title: 'Delete country',
+        country: results.country,
+        country_sandwiches: results.countries_sandwiches,
+      });
+    },
+  );
+};
+
+exports.country_delete_post = (req, res, next) => {
+  async.parallel(
+    {
+      country(callback) {
+        Country.findById(req.body.countryid).exec(callback);
+      },
+      countries_sandwiches(callback) {
+        Sandwich.find({ country: req.body.countryid }).exec(callback);
+      },
+    },
+    (err, results) => {
+      if (err) {
+        return next(err);
+      }
+      if (results.countries_sandwiches.length > 0) {
+        res.render('country_delete', {
+          title: 'Delete country',
+          country: results.country,
+          country_sandwiches: results.countries_sandwiches,
+        });
+      } else {
+        Country.findByIdAndRemove(req.body.countryid, (err) => {
+          if (err) {
+            return next(err);
+          }
+          res.redirect('/countries');
+        });
+      }
     },
   );
 };

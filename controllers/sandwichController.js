@@ -1,12 +1,12 @@
 const express = require('express');
 const async = require('async');
+const { body, validationResult } = require('express-validator');
 
-const Sandwiches = require('../models/sandwich');
-
-const router = express.Router();
+const Sandwich = require('../models/sandwich');
+const Country = require('../models/country');
 
 exports.sandwich_list = (req, res, next) => {
-  Sandwiches.find({}, 'name price')
+  Sandwich.find({}, 'name price')
     .sort([['name', 'ascending']])
     .exec((err, listSandwiches) => {
       if (err) {
@@ -20,7 +20,7 @@ exports.sandwich_detail = (req, res, next) => {
   async.parallel(
     {
       sandwich(callback) {
-        Sandwiches.findById(req.params.id).populate('country').exec(callback);
+        Sandwich.findById(req.params.id).populate('country').exec(callback);
       },
     },
     (err, results) => {
@@ -39,3 +39,145 @@ exports.sandwich_detail = (req, res, next) => {
     },
   );
 };
+
+exports.sandwich_create_get = (req, res, next) => {
+  async.parallel(
+    {
+      countries(callback) {
+        Country.find(callback);
+      },
+    },
+    (err, results) => {
+      if (err) {
+        return next(err);
+      }
+      res.render('sandwich_form', {
+        title: 'Create Sandwich',
+        countries: results.countries,
+      });
+    },
+  );
+};
+
+exports.sandwich_create_post = [
+  body('name', 'Name must not be empty.').trim().isLength({ min: 1 }).escape(),
+  body('description', 'Description must not be empty.').trim().isLength({ min: 1 }).escape(),
+  body('country.*').escape(),
+  body('price', 'Price must not be empty.').trim().isLength({ min: 1 }).escape(),
+
+  (req, res, next) => {
+    const errors = validationResult(req);
+
+    const sandwich = new Sandwich({
+      name: req.body.name,
+      description: req.body.description,
+      country: req.body.country,
+      price: req.body.price,
+    });
+
+    if (!errors.isEmpty()) {
+      async.parallel(
+        {
+          countries(callback) {
+            Country.find(callback);
+          },
+        },
+        (err, results) => {
+          if (err) {
+            return next(err);
+          }
+
+          res.render('sandwich_form', {
+            title: 'Create Sandwich',
+            countries: results.countries,
+            sandwich,
+            errors: errors.array(),
+          });
+        },
+      );
+    } else {
+      sandwich.save((err) => {
+        if (err) {
+          return next(err);
+        }
+        res.redirect(sandwich.url);
+      });
+    }
+  },
+];
+
+exports.sandwich_update_get = (req, res, next) => {
+  async.parallel(
+    {
+      sandwich(callback) {
+        Sandwich.findById(req.params.id).populate('sandwich').populate('country').exec(callback);
+      },
+      countries(callback) {
+        Country.find(callback);
+      },
+    },
+    (err, results) => {
+      if (err) {
+        return next(err);
+      }
+      if (results.sandwich == null) {
+        const err = new Error('Sandwich not found');
+        err.status = 404;
+        return next(err);
+      }
+      res.render('sandwich_form', {
+        title: 'Update sandwich',
+        countries: results.countries,
+        sandwich: results.sandwich,
+      });
+    },
+  );
+};
+
+exports.sandwich_update_post = [
+  body('name', 'Name must not be empty.').trim().isLength({ min: 1 }).escape(),
+  body('description', 'Description must not be empty.').trim().isLength({ min: 1 }).escape(),
+  body('country.*').escape(),
+  body('price', 'Price must not be empty.').trim().isLength({ min: 1 }).escape(),
+
+  (req, res, next) => {
+    const errors = validationResult(req);
+
+    const sandwich = new Sandwich({
+      name: req.body.name,
+      description: req.body.description,
+      country: req.body.country,
+      price: req.body.price,
+      _id: req.params.id,
+    });
+
+    if (!errors.isEmpty()) {
+      async.parallel(
+        {
+          countries(callback) {
+            Country.find(callback);
+          },
+        },
+        (err, results) => {
+          if (err) {
+            return next(err);
+          }
+
+          res.render('sandwich_form', {
+            title: 'Update Sandwich',
+            countries: results.countries,
+            sandwich,
+            errors: errors.array(),
+          });
+        },
+      );
+    } else {
+      Sandwich.findByIdAndUpdate(req.params.id, sandwich, {}, (err, thesandwich) => {
+        if (err) {
+          return next(err);
+        }
+        res.redirect(`/sandwiches/${thesandwich.url}`);
+      });
+    }
+  },
+];
