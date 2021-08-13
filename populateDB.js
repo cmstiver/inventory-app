@@ -28,14 +28,9 @@ function categoryCreate(name, cb) {
 }
 
 function sandwichCreate(name, description, price, category, cb) {
-  const sandwichDetail = {
-    name,
-    description,
-    price,
-  };
-  if (category !== false) sandwichDetail.category = category;
-
-  const sandwich = new Sandwich(sandwichDetail);
+  const sandwich = new Sandwich({
+    name, description, price, category,
+  });
   sandwich.save((err) => {
     if (err) {
       cb(err, null);
@@ -165,8 +160,8 @@ async.series(
     if (err) {
       console.log(`FINAL ERR: ${err}`);
     } else {
-      console.log(`SANDWICHES: ${sandwiches}`);
       console.log(`CATEGORIES: ${categories}`);
+      console.log(`SANDWICHES: ${sandwiches}`);
     }
     // All done, disconnect from database
     mongoose.connection.close();

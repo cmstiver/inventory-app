@@ -1,0 +1,15 @@
+extends layout
+
+block content
+  h1 Title: #{sandwich.name}
+  
+  p #[strong Category:] 
+    a(href=sandwich.category.url) #{sandwich.category.name}
+  p #[strong Price:] $#{sandwich.price}
+  p #[strong Description:] #{sandwich.description}
+      
+  hr
+  p
+    a(href=sandwich.url+'/delete') Delete Sandwich
+  p
+    a(href=sandwich.url+'/update') Update Sandwich
