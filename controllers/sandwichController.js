@@ -5,7 +5,7 @@ const Sandwich = require('../models/sandwich');
 const Country = require('../models/country');
 
 exports.sandwich_list = (req, res, next) => {
-  Sandwich.find({}, 'name price')
+  Sandwich.find({}, 'name price image')
     .sort([['name', 'ascending']])
     .exec((err, listSandwiches) => {
       if (err) {
@@ -32,7 +32,6 @@ exports.sandwich_detail = (req, res, next) => {
         return next(error);
       }
       return res.render('sandwich_detail', {
-        name: results.sandwich.name,
         sandwich: results.sandwich,
       });
     },

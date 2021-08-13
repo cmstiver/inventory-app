@@ -1,12 +1,13 @@
 extends layout
 
 block content
-  h1 Title: #{sandwich.name}
+  h1 #{sandwich.name}
   
   p #[strong Country:] 
     a(href='/countries/' + sandwich.country.url) #{sandwich.country.name}
   p #[strong Price:] $#{sandwich.price}
   p #[strong Description:] #{sandwich.description}
+  img(src=`${sandwich.image}`, alt=`${sandwich.name}`)
       
   hr
   p

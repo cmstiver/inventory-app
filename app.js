@@ -30,6 +30,15 @@ app.use(cookieParser());
 app.use(compression());
 app.use(helmet());
 
+app.use(
+  helmet.contentSecurityPolicy({
+    useDefaults: true,
+    directives: {
+      'img-src': ["'self'", 'i.imgur.com', 'www.mexicanplease.com', 'fabriquedelices.com'],
+    },
+  }),
+);
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);

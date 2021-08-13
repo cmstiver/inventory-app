@@ -6,8 +6,11 @@ block content
   ul
   each sandwich in sandwich_list
     li 
-      a(href=sandwich.url) #{sandwich.name} 
-      | ($#{sandwich.price})
+      div
+        a(href=sandwich.url) #{sandwich.name} 
+        | ($#{sandwich.price})
+      div
+        img(src=`${sandwich.image}`, alt=`${sandwich.name}`)
 
   else
     li There are no sandwiches.

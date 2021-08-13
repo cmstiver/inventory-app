@@ -27,12 +27,13 @@ function countryCreate(name, cb) {
   });
 }
 
-function sandwichCreate(name, description, price, country, cb) {
+function sandwichCreate(name, description, price, country, image, cb) {
   const sandwich = new Sandwich({
     name,
     description,
     price,
     country,
+    image,
   });
   sandwich.save((err) => {
     if (err) {
@@ -75,6 +76,7 @@ function createSandwiches(cb) {
           'Crispy, crunchy and salty bacon, fresh, slightly acidic tomatoes, chilled lettuce, mayonnaise, and toast. Lovely simplicity.',
           '9.99',
           countries[0],
+          'https://i.imgur.com/ctdRCSG.jpeg',
           callback,
         );
       },
@@ -84,6 +86,7 @@ function createSandwiches(cb) {
           'Reuben is a melty sandwich consisting of a combination of corned beef, rye bread, sauerkraut, Russian dressing, and Swiss cheese.',
           '10.99',
           countries[0],
+          'https://i.imgur.com/c4Mms1g.jpeg',
           callback,
         );
       },
@@ -93,6 +96,7 @@ function createSandwiches(cb) {
           'This classic French hot sandwich consists of a thin slice of ham and melted cheese tucked between two pieces of sliced bread.',
           '8.99',
           countries[1],
+          'https://i.imgur.com/TefAZKN.jpeg',
           callback,
         );
       },
@@ -102,6 +106,7 @@ function createSandwiches(cb) {
           'An extremely popular sandwich consisting of thinly sliced pieces of steak and tender, melting cheese in a long and crusty hoagie roll.',
           '9.99',
           countries[0],
+          'https://i.imgur.com/6m7ZG3R.jpeg',
           callback,
         );
       },
@@ -111,6 +116,7 @@ function createSandwiches(cb) {
           'A true American icon, club sandwich consists of bacon, cooked chicken breast, tomatoes, and lettuce sandwiched between a few slices of toasted bread with mayonnaise.',
           '8.99',
           countries[0],
+          'https://i.imgur.com/OyNjnqb.jpeg',
           callback,
         );
       },
@@ -120,6 +126,7 @@ function createSandwiches(cb) {
           'Mollete is a traditional sandwich from northern Mexico consisting of a halved bolillo bread roll that is topped with refried beans, cheese, and tomato salsa.',
           '8.99',
           countries[2],
+          'https://www.mexicanplease.com/wp-content/uploads/2018/02/molletes-bread-rolls-with-beans-and-cheese-cilantro.jpg',
           callback,
         );
       },
@@ -129,6 +136,7 @@ function createSandwiches(cb) {
           'Francesinha is a unique sandwich consisting of toasted bread, beef or pork, sausages, ham, and cheese, while the whole combination is then doused in a rich beer-infused tomato sauce.',
           '8.99',
           countries[3],
+          'https://i.imgur.com/tpujRNT.jpeg',
           callback,
         );
       },
@@ -138,6 +146,7 @@ function createSandwiches(cb) {
           'Although the combination of ham and butter on a baguette may seem simple, the jambon-beurre (ham-butter) sandwich is an iconic staple of Parisian gastronomy.',
           '8.99',
           countries[1],
+          'https://fabriquedelices.com/wp-content/uploads/2020/10/jambon-beurre-recipe-picture-900x899.png',
           callback,
         );
       },
@@ -147,6 +156,7 @@ function createSandwiches(cb) {
           'Cemita is a popular Mexican sandwich originating from Puebla, consisting of a fresh, sesame seed-sprinkled bun filled with tiny strands of shredded cheese, avocado slices, pickled jalapeños, papalo (herb with a unique flavor), and cutlets of meat such as pork, beef, or chicken, all fried in breadcrumbs. The sandwich can be additionally stuffed with tomatoes, lettuce, and mayonnaise.',
           '9.99',
           countries[2],
+          'https://i.imgur.com/9ApNRZX.jpeg',
           callback,
         );
       },
