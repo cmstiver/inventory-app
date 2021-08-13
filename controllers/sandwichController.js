@@ -62,6 +62,7 @@ exports.sandwich_create_post = [
   body('description', 'Description must not be empty.').trim().isLength({ min: 1 }).escape(),
   body('country.*').escape(),
   body('price', 'Price must not be empty.').trim().isLength({ min: 1 }).escape(),
+  body('image', 'Image must not be empty.').isURL().withMessage('Image URL must be a valid URL.'),
 
   (req, res, next) => {
     const errors = validationResult(req);
@@ -71,6 +72,7 @@ exports.sandwich_create_post = [
       description: req.body.description,
       country: req.body.country,
       price: req.body.price,
+      image: req.body.image,
     });
 
     if (!errors.isEmpty()) {
@@ -137,6 +139,7 @@ exports.sandwich_update_post = [
   body('description', 'Description must not be empty.').trim().isLength({ min: 1 }).escape(),
   body('country.*').escape(),
   body('price', 'Price must not be empty.').trim().isLength({ min: 1 }).escape(),
+  body('image', 'Image must not be empty.').isURL().withMessage('Image URL must be a valid URL.'),
 
   (req, res, next) => {
     const errors = validationResult(req);
@@ -146,6 +149,7 @@ exports.sandwich_update_post = [
       description: req.body.description,
       country: req.body.country,
       price: req.body.price,
+      image: req.body.image,
       _id: req.params.id,
     });
 
