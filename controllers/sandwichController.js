@@ -126,7 +126,7 @@ exports.sandwich_update_get = (req, res, next) => {
         return next(err);
       }
       res.render('sandwich_form', {
-        title: 'Update sandwich',
+        title: 'Update Sandwich',
         countries: results.countries,
         sandwich: results.sandwich,
       });
@@ -199,7 +199,7 @@ exports.sandwich_delete_get = (req, res, next) => {
         res.redirect('/sandwiches/');
       }
       res.render('sandwich_delete', {
-        title: 'Delete sandwich',
+        title: 'Delete Sandwich',
         sandwich: results.sandwich,
       });
     },

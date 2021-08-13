@@ -35,6 +35,12 @@ app.use(
     useDefaults: true,
     directives: {
       'img-src': ["'self'", 'i.imgur.com', 'www.mexicanplease.com', 'fabriquedelices.com'],
+      scriptSrc: [
+        "'self'",
+        'code.jquery.com',
+        'cdnjs.cloudflare.com',
+        'stackpath.bootstrapcdn.com',
+      ],
     },
   }),
 );

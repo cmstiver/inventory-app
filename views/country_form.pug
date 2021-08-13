@@ -1,13 +1,13 @@
 extends layout
 
 block content
-  h1 #{title}
-
-  form(method='POST' action='')
-    div.form-group
-      label(for='name') Country:
-      input#name.form-control(type='text', placeholder='Belgium, Germany, etc' name='name' value=(undefined===country ? '' : country.name))
-    button.btn.btn-primary(type='submit') Submit
+  h1.text-center.mt-3.text-white= title
+  div.d-flex.justify-content-center.mt-3
+    form.card(method='POST' action='' style="width: 50rem;")
+      div.card-body.px-3
+        label(for='name') Country:
+        input#name.form-control(type='text', placeholder='Belgium, Germany, etc' name='name' value=(undefined===country ? '' : country.name))
+      button.btn.btn-primary.mx-auto.mb-3(type='submit' style="width: 10rem;") Submit
 
   if errors
    ul

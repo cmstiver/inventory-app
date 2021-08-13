@@ -1,16 +1,15 @@
 extends layout
 
 block content
-  h1= title
-  
-  ul
-  each sandwich in sandwich_list
-    li 
-      div
-        a(href=sandwich.url) #{sandwich.name} 
-        | ($#{sandwich.price})
-      div
-        img(src=`${sandwich.image}`, alt=`${sandwich.name}`)
-
-  else
-    li There are no sandwiches.
+  div
+    h1.text-center.mt-3.text-white= title
+    each sandwich in sandwich_list
+      div.d-flex.justify-content-center
+          div.card.mt-3(style="width: 50rem;")
+            img(src=`${sandwich.image}`, alt="A lot of flags.")
+            div.card-body
+              h5.card-title #{sandwich.name}
+              p.card-text #{sandwich.price}
+              a.btn.btn-primary(href=sandwich.url) More Info
+    else
+      li There are no sandwiches.

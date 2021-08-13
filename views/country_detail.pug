@@ -2,23 +2,11 @@ extends layout
 
 block content
 
-  h1 Country: #{country.name}
-  
-  div(style='margin-left:20px;margin-top:20px')
+  h1.text-center.mt-3.text-white #{country.name}
 
-    h4 Sandwiches
-    
-    dl
-    each sandwich in country_sandwiches
-      dt 
-        a(href= '/sandwiches/' + sandwich.url) #{sandwich.name}
-      dd #{sandwich.description}
-
-    else
-      p This country has no sandwiches.
-      
-  hr
-  p
-    a(href=country.url+'/delete') Delete country
-  p
-    a(href=country.url+'/update') Update country
+  div.d-flex.justify-content-center
+    div.card.mt-3(style="width: 50rem;")
+      div.card-body
+        div.d-flex.justify-content-around
+          a.btn.btn-info(href=country.url+'/update') Update country
+          a.btn.btn-danger(href=country.url+'/delete') Delete country

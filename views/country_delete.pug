@@ -1,27 +1,29 @@
 extends layout
 
 block content
-  h1 #{title}: #{country.name}
+
+  h1.text-center.mt-3.text-white #{title}: #{country.name}
 
   if country_sandwiches.length
+    div.d-flex.justify-content-center
+      div.card.mt-3.p-4(style="width: 50rem;")
+        p #[strong Delete the following sandwiches before attempting to delete this country.]
 
-    p #[strong Delete the following sandwiches before attempting to delete this country.]
+        h4 Sandwiches
 
-    div(style='margin-left:20px;margin-top:20px')
-
-      h4 Sandwiches
-
-      dl
-      each sandwich in country_sandwiches
-        dt
-          a(href='/sandwiches/' + sandwich.url) #{sandwich.name}
-        dd #{sandwich.description}
+        dl
+        each sandwich in country_sandwiches
+          dt
+            a(href='/sandwiches/' + sandwich.url) #{sandwich.name}
+          dd #{sandwich.description}
 
   else
-    p Do you really want to delete this country?
+    div.d-flex.justify-content-center
+      div.card.mt-3.p-4(style="width: 50rem;")
+        p Do you really want to delete this country?
 
-    form(method='POST' action='')
-      div.form-group
-        input#countryid.form-control(type='hidden',name='countryid', required='true', value=country._id )
+        form(method='POST' action='')
+          div.form-group
+            input#countryid.form-control(type='hidden',name='countryid', required='true', value=country._id )
 
-      button.btn.btn-primary(type='submit') Delete
+          button.btn.btn-danger(type='submit') Delete

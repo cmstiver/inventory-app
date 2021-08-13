@@ -1,16 +1,16 @@
 extends layout
 
 block content
-  h1 #{sandwich.name}
-  
-  p #[strong Country:] 
-    a(href='/countries/' + sandwich.country.url) #{sandwich.country.name}
-  p #[strong Price:] $#{sandwich.price}
-  p #[strong Description:] #{sandwich.description}
-  img(src=`${sandwich.image}`, alt=`${sandwich.name}`)
-      
-  hr
-  p
-    a(href=sandwich.url+'/delete') Delete Sandwich
-  p
-    a(href=sandwich.url+'/update') Update Sandwich
+  h1.text-center.mt-3.text-white #{sandwich.name}
+
+  div.d-flex.justify-content-center
+    div.card.mt-3(style="width: 50rem;")
+      img(src=`${sandwich.image}`, alt="A lot of flags.")
+      div.card-body
+        h5.card-title #{sandwich.name}
+        p.card-text #{sandwich.price}
+        p.card-text #{sandwich.description}
+        div.d-flex.justify-content-around
+          a.btn.btn-info(href=sandwich.url+'/update') Update Sandwich
+          a.btn.btn-danger(href=sandwich.url+'/delete') Delete Sandwich
+          

@@ -1,12 +1,13 @@
 extends layout
 
 block content
-  h1= title
+  h1.text-center.mt-3.text-white= title
   
-  ul
-  each country in country_list
-    li 
-      a(href=country.url) #{country.name} 
+  ul.card.mt-3.mx-auto.text-center(style="width:50rem;")
+    div.card-body
+      each country in country_list
+        li.nav-link
+          a(href=country.url) #{country.name} 
 
-  else
-    li There are no countries.
+      else
+        li There are no countries.

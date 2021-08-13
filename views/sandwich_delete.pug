@@ -1,12 +1,13 @@
 extends layout
 
 block content
-  h1 #{title}: #{sandwich.name}
+  h1.text-center.mt-3.text-white #{title}: #{sandwich.name}
+  div.d-flex.justify-content-center
+    div.card.mt-3.p-4(style="width: 50rem;")
+      p Do you really want to delete this sandwich?
 
-  p Do you really want to delete this sandwich?
+      form(method='POST' action='')
+        div.form-group
+          input#sandwichid.form-control(type='hidden',name='sandwichid', required='true', value=sandwich._id )
 
-  form(method='POST' action='')
-    div.form-group
-      input#sandwichid.form-control(type='hidden',name='sandwichid', required='true', value=sandwich._id )
-
-    button.btn.btn-primary(type='submit') Delete
+        button.btn.btn-danger(type='submit') Delete

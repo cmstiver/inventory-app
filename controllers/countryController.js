@@ -11,7 +11,7 @@ exports.country_list = (req, res, next) => {
       if (err) {
         return next(err);
       }
-      return res.render('country_list', { title: 'country List', country_list: listCountries });
+      return res.render('country_list', { title: 'Country List', country_list: listCountries });
     });
 };
 
@@ -38,7 +38,7 @@ exports.country_detail = (req, res, next) => {
       }
       // Successful, so render.
       return res.render('country_detail', {
-        title: 'country Detail',
+        title: 'Country Detail',
         country: results.country,
         country_sandwiches: results.country_sandwiches,
       });
@@ -99,7 +99,7 @@ exports.country_update_get = (req, res, next) => {
       }
       res.render('country_form', {
         title: 'Update Country',
-        countries: results.country,
+        country: results.country,
       });
     },
   );
@@ -148,7 +148,7 @@ exports.country_delete_get = (req, res, next) => {
         res.redirect('/countries/');
       }
       res.render('country_delete', {
-        title: 'Delete country',
+        title: 'Delete Country',
         country: results.country,
         country_sandwiches: results.countries_sandwiches,
       });
@@ -172,7 +172,7 @@ exports.country_delete_post = (req, res, next) => {
       }
       if (results.countries_sandwiches.length > 0) {
         res.render('country_delete', {
-          title: 'Delete country',
+          title: 'Delete Country',
           country: results.country,
           country_sandwiches: results.countries_sandwiches,
         });
