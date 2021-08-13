@@ -59,10 +59,10 @@ exports.sandwich_create_get = (req, res, next) => {
 };
 
 exports.sandwich_create_post = [
-  body('name', 'Name must not be empty.').trim().isLength({ min: 1 }).escape(),
-  body('description', 'Description must not be empty.').trim().isLength({ min: 1 }).escape(),
-  body('country.*').escape(),
-  body('price', 'Price must not be empty.').trim().isLength({ min: 1 }).escape(),
+  body('name', 'Name must not be empty.').trim().isLength({ min: 1 }),
+  body('description', 'Description must not be empty.').trim().isLength({ min: 1 }),
+  body('country.*'),
+  body('price', 'Price must not be empty.').trim().isLength({ min: 1 }),
   body('image', 'Image must not be empty.').isURL().withMessage('Image URL must be a valid URL.'),
 
   (req, res, next) => {
@@ -136,10 +136,10 @@ exports.sandwich_update_get = (req, res, next) => {
 };
 
 exports.sandwich_update_post = [
-  body('name', 'Name must not be empty.').trim().isLength({ min: 1 }).escape(),
-  body('description', 'Description must not be empty.').trim().isLength({ min: 1 }).escape(),
-  body('country.*').escape(),
-  body('price', 'Price must not be empty.').trim().isLength({ min: 1 }).escape(),
+  body('name', 'Name must not be empty.').trim().isLength({ min: 1 }),
+  body('description', 'Description must not be empty.').trim().isLength({ min: 1 }),
+  body('country.*'),
+  body('price', 'Price must not be empty.').trim().isLength({ min: 1 }),
   body('image', 'Image must not be empty.').isURL().withMessage('Image URL must be a valid URL.'),
 
   (req, res, next) => {

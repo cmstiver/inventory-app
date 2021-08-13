@@ -51,7 +51,7 @@ exports.country_create_get = (req, res) => {
 };
 
 exports.country_create_post = [
-  body('name', 'Country name required').trim().isLength({ min: 1 }).escape(),
+  body('name', 'Country name required').trim().isLength({ min: 1 }),
 
   (req, res, next) => {
     const errors = validationResult(req);
@@ -106,7 +106,7 @@ exports.country_update_get = (req, res, next) => {
 };
 
 exports.country_update_post = [
-  body('name', 'Country name required').trim().isLength({ min: 1 }).escape(),
+  body('name', 'Country name required').trim().isLength({ min: 1 }),
 
   (req, res, next) => {
     const errors = validationResult(req);
