@@ -213,7 +213,7 @@ exports.sandwich_delete_post = (req, res, next) => {
         Sandwich.findById(req.body.sandwichid).exec(callback);
       },
     },
-    (err, results) => {
+    (err) => {
       if (err) {
         return next(err);
       }
