@@ -2,23 +2,23 @@ extends layout
 
 block content
 
-  h1 Category: #{category.name}
+  h1 Country: #{country.name}
   
   div(style='margin-left:20px;margin-top:20px')
 
     h4 Sandwiches
     
     dl
-    each sandwich in category_sandwiches
+    each sandwich in country_sandwiches
       dt 
         a(href= '/sandwiches/' + sandwich.url) #{sandwich.name}
       dd #{sandwich.description}
 
     else
-      p This category has no sandwiches.
+      p This country has no sandwiches.
       
   hr
   p
-    a(href=category.url+'/delete') Delete category
+    a(href=country.url+'/delete') Delete country
   p
-    a(href=category.url+'/update') Update category
+    a(href=country.url+'/update') Update country

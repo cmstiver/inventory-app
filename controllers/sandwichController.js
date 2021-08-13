@@ -20,7 +20,7 @@ exports.sandwich_detail = (req, res, next) => {
   async.parallel(
     {
       sandwich(callback) {
-        Sandwiches.findById(req.params.id).populate('category').exec(callback);
+        Sandwiches.findById(req.params.id).populate('country').exec(callback);
       },
     },
     (err, results) => {

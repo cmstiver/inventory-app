@@ -2,7 +2,7 @@ require('dotenv').config();
 const async = require('async');
 const mongoose = require('mongoose');
 const Sandwich = require('./models/sandwich');
-const Category = require('./models/category');
+const Country = require('./models/country');
 
 const mongoDB = process.env.MONGODB_URI;
 mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
@@ -11,25 +11,28 @@ const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 const sandwiches = [];
-const categories = [];
+const countries = [];
 
-function categoryCreate(name, cb) {
-  const category = new Category({ name });
+function countryCreate(name, cb) {
+  const country = new Country({ name });
 
-  category.save((err) => {
+  country.save((err) => {
     if (err) {
       cb(err, null);
       return;
     }
-    console.log(`New Category: ${category}`);
-    categories.push(category);
-    cb(null, category);
+    console.log(`New country: ${country}`);
+    countries.push(country);
+    cb(null, country);
   });
 }
 
-function sandwichCreate(name, description, price, category, cb) {
+function sandwichCreate(name, description, price, country, cb) {
   const sandwich = new Sandwich({
-    name, description, price, category,
+    name,
+    description,
+    price,
+    country,
   });
   sandwich.save((err) => {
     if (err) {
@@ -42,20 +45,20 @@ function sandwichCreate(name, description, price, category, cb) {
   });
 }
 
-function createCategories(cb) {
+function createcountries(cb) {
   async.series(
     [
       (callback) => {
-        categoryCreate('America', callback);
+        countryCreate('America', callback);
       },
       (callback) => {
-        categoryCreate('France', callback);
+        countryCreate('France', callback);
       },
       (callback) => {
-        categoryCreate('Mexico', callback);
+        countryCreate('Mexico', callback);
       },
       (callback) => {
-        categoryCreate('Portugal', callback);
+        countryCreate('Portugal', callback);
       },
     ],
     // optional callback
@@ -71,7 +74,7 @@ function createSandwiches(cb) {
           'BLT',
           'Crispy, crunchy and salty bacon, fresh, slightly acidic tomatoes, chilled lettuce, mayonnaise, and toast. Lovely simplicity.',
           '9.99',
-          categories[0],
+          countries[0],
           callback,
         );
       },
@@ -80,7 +83,7 @@ function createSandwiches(cb) {
           'Reuban',
           'Reuben is a melty sandwich consisting of a combination of corned beef, rye bread, sauerkraut, Russian dressing, and Swiss cheese.',
           '10.99',
-          categories[0],
+          countries[0],
           callback,
         );
       },
@@ -89,7 +92,7 @@ function createSandwiches(cb) {
           'Croque-monsieur',
           'This classic French hot sandwich consists of a thin slice of ham and melted cheese tucked between two pieces of sliced bread.',
           '8.99',
-          categories[1],
+          countries[1],
           callback,
         );
       },
@@ -98,7 +101,7 @@ function createSandwiches(cb) {
           'Philly Cheesesteak',
           'An extremely popular sandwich consisting of thinly sliced pieces of steak and tender, melting cheese in a long and crusty hoagie roll.',
           '9.99',
-          categories[0],
+          countries[0],
           callback,
         );
       },
@@ -107,7 +110,7 @@ function createSandwiches(cb) {
           'Club Sandwich',
           'A true American icon, club sandwich consists of bacon, cooked chicken breast, tomatoes, and lettuce sandwiched between a few slices of toasted bread with mayonnaise.',
           '8.99',
-          categories[0],
+          countries[0],
           callback,
         );
       },
@@ -116,7 +119,7 @@ function createSandwiches(cb) {
           'Mollete',
           'Mollete is a traditional sandwich from northern Mexico consisting of a halved bolillo bread roll that is topped with refried beans, cheese, and tomato salsa.',
           '8.99',
-          categories[2],
+          countries[2],
           callback,
         );
       },
@@ -125,7 +128,7 @@ function createSandwiches(cb) {
           'Francesinha',
           'Francesinha is a unique sandwich consisting of toasted bread, beef or pork, sausages, ham, and cheese, while the whole combination is then doused in a rich beer-infused tomato sauce.',
           '8.99',
-          categories[3],
+          countries[3],
           callback,
         );
       },
@@ -134,7 +137,7 @@ function createSandwiches(cb) {
           'Jambon-beurre',
           'Although the combination of ham and butter on a baguette may seem simple, the jambon-beurre (ham-butter) sandwich is an iconic staple of Parisian gastronomy.',
           '8.99',
-          categories[1],
+          countries[1],
           callback,
         );
       },
@@ -143,7 +146,7 @@ function createSandwiches(cb) {
           'Cemita',
           'Cemita is a popular Mexican sandwich originating from Puebla, consisting of a fresh, sesame seed-sprinkled bun filled with tiny strands of shredded cheese, avocado slices, pickled jalapeños, papalo (herb with a unique flavor), and cutlets of meat such as pork, beef, or chicken, all fried in breadcrumbs. The sandwich can be additionally stuffed with tomatoes, lettuce, and mayonnaise.',
           '9.99',
-          categories[2],
+          countries[2],
           callback,
         );
       },
@@ -154,13 +157,13 @@ function createSandwiches(cb) {
 }
 
 async.series(
-  [createCategories, createSandwiches],
+  [createcountries, createSandwiches],
   // Optional callback
   (err) => {
     if (err) {
       console.log(`FINAL ERR: ${err}`);
     } else {
-      console.log(`CATEGORIES: ${categories}`);
+      console.log(`countries: ${countries}`);
       console.log(`SANDWICHES: ${sandwiches}`);
     }
     // All done, disconnect from database

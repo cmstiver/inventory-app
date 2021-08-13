@@ -3,8 +3,8 @@ extends layout
 block content
   h1 Title: #{sandwich.name}
   
-  p #[strong Category:] 
-    a(href=sandwich.category.url) #{sandwich.category.name}
+  p #[strong Country:] 
+    a(href='/countries/' + sandwich.country.url) #{sandwich.country.name}
   p #[strong Price:] $#{sandwich.price}
   p #[strong Description:] #{sandwich.description}
       

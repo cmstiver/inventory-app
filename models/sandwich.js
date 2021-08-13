@@ -7,7 +7,7 @@ const SandwichSchema = new Schema({
   name: { type: String, required: true, maxLength: 100 },
   description: { type: String, required: true, maxLength: 500 },
   price: { type: Number, required: true },
-  category: { type: Schema.ObjectId, ref: 'Category' },
+  country: { type: Schema.ObjectId, ref: 'Country' },
 });
 
 SandwichSchema.virtual('url').get(function () {
